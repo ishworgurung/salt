@@ -1,0 +1,5 @@
+[program:alertmanager]
+command=/usr/local/sbin/alertmanager --config.file="/etc/alertmanager/config.yml"
+process_name=%(program_name)s
+autostart=true
+autorestart=unexpected

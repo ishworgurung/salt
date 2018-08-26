@@ -1,0 +1,5 @@
+[program:node_exporter]
+command=/usr/local/sbin/node_exporter
+process_name=%(program_name)s
+autostart=true
+autorestart=unexpected

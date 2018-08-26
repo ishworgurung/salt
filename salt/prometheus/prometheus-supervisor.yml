@@ -1,0 +1,5 @@
+[program:prometheus]
+command=/usr/local/sbin/prometheus --config.file="/etc/prometheus/prometheus.yml"
+process_name=%(program_name)s
+autostart=true
+autorestart=unexpected

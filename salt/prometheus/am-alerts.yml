@@ -1,0 +1,34 @@
+groups:
+- name: host-alert
+  rules:
+  # Alert for any instance that is unreachable for >1 minutes.
+  - alert: HostDown
+    expr: up == 0
+    for: 1m
+    labels:
+      severity: page
+    annotations:
+      summary: "Host {{ $labels.instance }} down"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes."
+- name: internet-rx-alert
+  rules:
+  # Alert for any instance that is unreachable for >1 minutes.
+  - alert: GWNetRxIncreasing
+    expr: rate(node_network_receive_bytes_total{instance="10.10.30.1:9100",device="eth1.100"}[2m]) > 7000000
+    for: 1m
+    labels:
+      severity: page
+    annotations:
+      summary: "Gateway netif {{ $labels.device }} on {{ $labels.instance }} is rx'ing > 70m/s"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has rx'ed > 70m/s for more than 1 minutes on vlan interface {{ $labels.device }}."
+- name: internet-tx-alert
+  rules:
+  # Alert for any instance that is unreachable for >1 minutes.
+  - alert: GWNetTxIncreasing
+    expr: rate(node_network_transmit_bytes_total{instance="10.10.30.1:9100",device="eth1.100"}[2m]) > 2000000
+    for: 1m
+    labels:
+      severity: page
+    annotations:
+      summary: "Gateway netif {{ $labels.device }} on {{ $labels.instance }} is tx'ing > 20m/s"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has tx > 20m/s for more than 1 minutes on vlan interface {{ $labels.device }}."
